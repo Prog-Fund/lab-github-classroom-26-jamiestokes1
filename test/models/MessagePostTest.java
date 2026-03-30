@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.annotation.processing.SupportedAnnotationTypes;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MessagePostTest {
@@ -13,8 +15,8 @@ class MessagePostTest {
 
     @BeforeEach
     void setUp() {
-       messagePost1 = new MessagePost("Mary", "Hi there.");
-       messagePost2 = new MessagePost("John", "I'm on my way.");
+        messagePost1 = new MessagePost("Mary", "Hi there.");
+        messagePost2 = new MessagePost("John", "I'm on my way.");
     }
 
     @AfterEach
@@ -25,13 +27,21 @@ class MessagePostTest {
 
     @Test
     void setMessage() {
-        assertEquals("Hi there." ,messagePost1.getMessage());
-        assertEquals("I'm on my way." ,messagePost2.getMessage());
+        assertEquals("Hi there.", messagePost1.getMessage());
+        assertEquals("I'm on my way.", messagePost2.getMessage());
 
         messagePost1.setMessage("Bye Bye");
         messagePost2.setMessage("Wait.. Wait..");
         assertEquals("Bye Bye", messagePost1.getMessage());
         assertEquals("Wait.. Wait..", messagePost2.getMessage());
         //TODO  test when try to set a message that's too long
+        String longMessage = "This message is more than forty characters long!";
+        String originalMessage = messagePost1.getMessage(); // should still be "Bye Bye"
+
+        messagePost1.setMessage(longMessage);
+
+        // Should not change
+        assertEquals(originalMessage, messagePost1.getMessage());
+
     }
 }
